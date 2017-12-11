@@ -1,0 +1,42 @@
+{
+  "name": "gatsby-pagination",
+  "version": "1.0.0",
+  "description": "Gatsby utility that generates pages with pagination",
+  "author": "Hays Clark <hays@infinitedescent.com>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "build": "babel src --out-dir . --ignore __tests__",
+    "watch": "babel -w src --out-dir . --ignore __tests__",
+    "format": "npm run format-src && npm run format-markdown",
+    "format-src": "prettier-eslint --write \"src/**/*.js\"",
+    "format-markdown": "prettier --write \"**/*.md\" --semi",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch",
+    "release": "standard-version"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/infinitedescent/gatsby-pagination.git"
+  },
+  "keywords": [
+    "gatsby",
+    "pagination"
+  ],
+  "bugs": {
+    "url": "https://github.com/infinitedescent/gatsby-pagination/issues"
+  },
+  "homepage": "https://github.com/infinitedescent/gatsby-pagination#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-jest": "^21.2.0",
+    "babel-preset-env": "^1.6.1",
+    "cross-env": "^5.1.1",
+    "jest": "^21.2.1",
+    "nyc": "^11.3.0",
+    "prettier": "^1.9.1",
+    "prettier-eslint-cli": "^4.6.1",
+    "standard-version": "^4.2.0"
+  }
+}

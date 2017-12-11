@@ -1,0 +1,8 @@
+# NodeJS
+node_modules/
+
+# Build artifacts
+coverage/
+
+# Transpiled code
+/*.js

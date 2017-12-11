@@ -1,0 +1,30 @@
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Babel
+.babelrc
+
+# ESLint
+.eslintrc
+
+# travis-ci
+.travis.yml
+
+# Dependency directory
+node_modules
+src
+coverage
+package-lock.json
+
+# Documentation
+docs
+documentation.yml

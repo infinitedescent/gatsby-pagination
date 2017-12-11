@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+- node
+- '8'
+- '7'
+- '6'
+script:
+- echo "Running tests against $(node -v) ..."
+- npm test
+jobs:
+  include:
+  - stage: Publish npm
+    node_js: node
+    script:
+    - echo "Release npm against $(node -v) ..."
+    deploy:
+      provider: npm
+      skip_cleanup: true
+      email: infinitedescent@infinitedescent.com
+      api_key:
+        secure: Lgywgxf9F3tOlMzQvgP7M+bN0Ijf5hA7vCxXsSH9ESwhUznTC2m5A38cGHGacZB35oFysrshkQM6cE/P6q2J9VAw4An9/TUakaFDK3HgilopWMt18regDm1S5Kv8VUOkVFIz8tky94pkpLJXtC6gBDuZbOsvarQFyB/62+1U4TUBPUaFpaOKJRaSNM6WGazUHBHB2ZISiHyTrfrs3JB5nsitW19Niwv9PisEddcAXF74qfsgTLhyfvXPISgHhedIDKsSvAcc3A8jQvv+r1nYq61uFpAT+KBz1CHJy6YaJiXvKVrf6zaUzkr5J3MJBimzoqDSUb6sQY4wyCpuOjTWVUDjbXMPEmt0CsFfanKp/n1VLfsq0qurO25wZ4GcVIlecwnvgkOIDu8meP7FhCe/v7iAP8WdqB1YCxYgSfXQCkReFZVp0cpdXwm6uHYyksntXH+1wt6b0UJnA1wmqTxUpd2ezFm6MjJDWw9qEWLVBgRLv0STuNL3k6TPrZOPCu1KNNWYu+3SOrH150mBj42GtMOvyERP23GGUFdUtXAILRx9mzWk37K+skRnAhk6+AG7nvxSjBmZsWBwTksVOttDEQIO7UP96H4Wz3z68AsXqr1R2Bl9g3RaukeBDjGVCbF3AUn60gDdcrS6mFMFVsu7SZevKjJ9RLMG7/m9KeGhWXA=
+      on:
+        tags: true
+        branch: master
+        repo: infinitedescent/gatsby-pagination
