@@ -5,8 +5,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/infinitedescent/gatsby-pagination/badge.svg)](https://coveralls.io/github/infinitedescent/gatsby-pagination)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
-This simple utility is intended to help authors add any form of pagination to there [GatsbyJS](https://www.gatsbyjs.org/) projects. The library, especially the variables passed to each page, was inspired but the [pagination](https://themes.ghost.org/docs/pagination) of Ghost.
-The library works by wrapping Gatsby's [createPage](https://www.gatsbyjs.org/docs/bound-action-creators/#createPage) method and creating creating pages with the desired number of nodes, typically posts, per page. Each page receives the nodes for that page, along with commonly used pagination parameters.
+This simple utility is intended to help authors add pagination to their [GatsbyJS](https://www.gatsbyjs.org/) projects. The library works by dividing the provided data set into smaller subsets, then calling Gatsby's [createPage](https://www.gatsbyjs.org/docs/bound-action-creators/#createPage) method for each subset. In addition to the subset data itself, each page also receives helpful pagination variables, modeled after [Ghost's](https://ghost.org/) [pagination](https://themes.ghost.org/docs/pagination) data.
 
 ## Installation
 
@@ -19,16 +18,19 @@ npm install --save gatsby-pagination
 ### Overview
 
 To create pages with pagination, _gatsby-pagination_ should be required in
-`gatsby-node.js` and instead of calling Gatsby's _createPage_ directly call
-_createPaginationPages_. The method will requires a reference to _createPage_
-as well as a _component_. The name of the component is critical to the location
-of the intended page, for most users the component should be named `index.js`.
-See the additional documentation for more information as well as the example
-projects.
+`gatsby-node.js`. Instead of calling Gatsby's _createPage_ directly, call
+_createPaginationPages_. The method requires a reference to _createPage_, your
+data set, as well as a _component_.
+
+> The _name_ of the component is critical to the location of the intended page, see Gatsby's [createPage](https://www.gatsbyjs.org/docs/node-apis/#createPages) documentation to learn more about _components_.
+
+Starting from the root page, each additional page included it's page number in the route. e.g. `/blog` for page 1, `/blog/2` for page 2, etc.
+
+Recommended reference: [Creating pages in gatsby-node.js](https://www.gatsbyjs.org/docs/creating-and-modifying-pages/)
 
 ### Require the package
 
-In `gatsby-node.js` require the _gatsby-paginate_ library.
+In `gatsby-node.js` require or import the _createPaginationPages_ factory method from _gatsby-paginate_.
 
 ```js
 const { createPaginationPages } = require("gatsby-paginate");
@@ -36,16 +38,12 @@ const { createPaginationPages } = require("gatsby-paginate");
 
 ### Call createPaginatePages
 
-Gatsby calls the exported [_createPages_](https://www.gatsbyjs.org/docs/node-apis/#createPages) method in `gatsby-node.js`
-when its time to start generating static pages. The framework expects the use of _bound-action-creators_
-such as [_createPage_](https://www.gatsbyjs.org/docs/bound-action-creators/#createPage) to generate the pages
-that make up your site. Typically, one would call _createPage_
-directly; however, we want to use _gatsby-paginate_ instead, which will divide the data set
-into subsets, each containing 10 nodes (customizable via _limit_ parameter). For each of these subsets the library
-calls _createPage_, forwarding the subset of notes along with other pagination parameters such
-as _prev_ and _next_. Additionally, _createPaginationPages_ takes optional parameters _limit_
-to control the maximum number of node per subset and _pathFormatter_; which is callback for creating custom
+In _export.createPages_ get a reference to Gatsby's _createPage_ method from access to _boundActionCreators_.
+Provide _createPaginatePages_ with _createPage_, the data set of nodes, and the _component_ to generate the pages with pagination.
+Additionally, _createPaginationPages_ takes optional _limit_ parameters for setting the maximum number of node per subset and _pathFormatter_ which can be use to creating custom
 paths.
+
+See the [createPaginatePages](https://infinitedescent.github.io/gatsby-pagination/#createpaginationpages) documentation for more details.
 
 ```js
 exports.createPages = ({ graphql, boundActionCreators }) => {
@@ -85,8 +83,11 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 ### Create the index.js component
 
-Create an `index.js` file in components and make sure to remove any other pages
-which could collide with the '/index' path.
+Create an `index.js` templates and make sure to remove any other pages
+which could collide with the '/index' path. Gatsby-pagination adds extra
+pagination properties to the page's context, such as _prev_ and _next_.
+
+See the [context](https://infinitedescent.github.io/gatsby-pagination/#context) documentation for more details.
 
 ```js
 import React from "react";
