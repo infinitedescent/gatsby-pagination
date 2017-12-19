@@ -54,7 +54,7 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
     const postPage = path.resolve("src/components/post.jsx");
     resolve(
       graphql(
-        `` // GraphQL Query
+        `add GraphQL query`
       ).then(result => {
         if (result.errors) {
           reject(result.errors);
@@ -85,21 +85,16 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
 
 Create an `index.js` templates and make sure to remove any other pages
 which could collide with the '/index' path. Gatsby-pagination adds extra
-pagination properties to the page's context, such as _prev_ and _next_.
+pagination properties to the page's _pathContext_, such as _prev_ and _next_.
 
-See the [context](https://infinitedescent.github.io/gatsby-pagination/#context) documentation for more details.
+See the [pathContext](https://infinitedescent.github.io/gatsby-pagination/#pathcontext) documentation for more details.
 
 ```js
 import React from "react";
 import Link from "gatsby-link";
 
 const IndexPage = ({ data, pathContext }) => {
-  // Note, data is the result of the GraphQL query; however, the path context
-  // will have the subset of nodes provided to gatsby-pagination in 'gatsby-node.js'.
-
   const { nodes, page, prev, next, pages, total, limit } = pathContext;
-  // See docs about properties provided by gatsby-pagination'
-
   const PaginationLink = props => {
     if (props.to && props.text) {
       return <Link to={props.to} text={props.text} />;
@@ -132,8 +127,7 @@ import Index from "../components/index";
 
 export default IndexPage;
 
-// example par page query
-export const query = graphql``;
+export const query = graphql`add GraphQL query`;
 ```
 
 ## License

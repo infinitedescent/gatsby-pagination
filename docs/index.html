@@ -35,9 +35,9 @@
               
                 
                 <li><a
-                  href='#context'
+                  href='#pathcontext'
                   class="">
-                  context
+                  pathContext
                   
                 </a>
                 
@@ -76,7 +76,7 @@
   </div>
   
 
-  <p>Creates Gatsby pages with pagination by calling Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a> API. Each page is provided additional pagination properties in the <a href="#context">context</a> parameter.</p>
+  <p>Creates Gatsby pages with pagination by calling Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a> API. Each page is provided additional pagination properties in the <a href="#pathcontext">pathContext</a> parameter.</p>
 
 
   <div class='pre p1 fill-light mt0'>createPaginationPages(props: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
@@ -118,7 +118,7 @@
   <td class='break-word'><span class='code bold'>props.createPage</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
   </td>
   <td class='break-word'><span>reference to Gatsby's createPage method, library will pass pagination properties to 
-<a href="#context">context</a>
+<a href="context">context</a>
  object.
 </span></td>
 </tr>
@@ -228,18 +228,18 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='context'>
-      context
+    <h3 class='fl m0' id='pathcontext'>
+      pathContext
     </h3>
     
     
   </div>
   
 
-  <p>Sample context received by Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPages</a> API.</p>
+  <p>Sample pathContext received in component.</p>
 
 
-  <div class='pre p1 fill-light mt0'>context</div>
+  <div class='pre p1 fill-light mt0'>pathContext</div>
   
     <p>
       Type:
@@ -317,6 +317,17 @@
 
   
 
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-keyword">const</span> IndexPage = <span class="hljs-function">(<span class="hljs-params">{ data, pathContext }</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { nodes, page, prev, next, pages, total, limit } = pathContext;
+  <span class="hljs-comment">//...</span>
+});</pre>
+    
   
 
   

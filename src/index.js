@@ -4,7 +4,7 @@ import PaginationPageBuilder from "./pagination-page-builder";
 import { DEFAULT_PATH_FORMATTER } from "./constants";
 
 /**
- * Creates Gatsby pages with pagination by calling Gatsby's {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|createPage} API. Each page is provided additional pagination properties in the {@link context} parameter.
+ * Creates Gatsby pages with pagination by calling Gatsby's {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|createPage} API. Each page is provided additional pagination properties in the {@link pathContext} parameter.
  *
  * @requires module:gatsby
  * @param {Object} props - properties
@@ -18,7 +18,7 @@ import { DEFAULT_PATH_FORMATTER } from "./constants";
  * @throws {Error} Argument `edges` must be provided.
  * @throws {Error} Argument `component` must be provided.
  *
- * @see context
+ * @see pathContext
  * @see [Gatsby's createPage documentation]{@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
  *
  * @example
@@ -32,8 +32,8 @@ import { DEFAULT_PATH_FORMATTER } from "./constants";
  */
 export function createPaginationPages(props) {
   /**
-   * Sample context received by Gatsby's {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|createPages} API.
-   * @typedef {Object} context
+   * Sample pathContext received in component.
+   * @typedef {Object} pathContext
    * @property {Array<Object>} nodes - the subset of Edge nodes
    * @property {number} limit - the maximum number of nodes per page
    * @property {number} page - the current page number, base-1
@@ -41,6 +41,14 @@ export function createPaginationPages(props) {
    * @property {number} total - the total number of nodes
    * @property {string|undefined} prev - the path of previous page if it exists
    * @property {string|undefined} next - the path of next page if it exists
+   *
+   * @example
+   * import React from "react";
+   *
+   * const IndexPage = ({ data, pathContext }) => {
+   *   const { nodes, page, prev, next, pages, total, limit } = pathContext;
+   *   //...
+   * });
    */
   const { createPage, edges, component, limit, pathFormatter } = props;
   const paginationPageBuilder = new PaginationPageBuilder(

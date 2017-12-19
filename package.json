@@ -16,7 +16,7 @@
     "publish-docs": "gh-pages -d docs",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
-    "release": "standard-version"
+    "release": "standard-version -a"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,7 @@
   "homepage": "https://github.com/infinitedescent/gatsby-pagination#readme",
   "standard-version": {
     "scripts": {
-      "precommit": "npm run build-docs"
+      "precommit": "npm run build-docs && git add docs/index.html"
     }
   },
   "devDependencies": {
