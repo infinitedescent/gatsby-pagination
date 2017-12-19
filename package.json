@@ -29,6 +29,11 @@
     "url": "https://github.com/infinitedescent/gatsby-pagination/issues"
   },
   "homepage": "https://github.com/infinitedescent/gatsby-pagination#readme",
+  "standard-version": {
+    "scripts": {
+      "precommit": "npm run build-docs"
+    }
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-jest": "^21.2.0",
