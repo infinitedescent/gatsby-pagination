@@ -19,6 +19,9 @@ coverage
 # travis-ci
 .travis.yml
 
+# Prettier
+.prettierignore
+
 # Dependency directory
 node_modules
 src
