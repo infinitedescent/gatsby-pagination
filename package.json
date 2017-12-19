@@ -13,6 +13,7 @@
     "format-src": "prettier-eslint --write \"src/**/*.js\"",
     "format-markdown": "prettier --write \"**/*.md\" --semi",
     "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "publish-docs": "gh-pages -d docs",
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "release": "standard-version"
@@ -39,6 +40,7 @@
     "babel-jest": "^21.2.0",
     "babel-preset-env": "^1.6.1",
     "cross-env": "^5.1.1",
+    "gh-pages": "^1.1.0",
     "jest": "^21.2.1",
     "nyc": "^11.3.0",
     "prettier": "^1.9.1",
