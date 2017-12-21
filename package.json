@@ -7,7 +7,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir . --ignore __tests__",
-    "build-docs": "documentation build src/** -f html -o docs",
+    "docs": "documentation build src/** -f html -o docs",
     "watch": "babel -w src --out-dir . --ignore __tests__",
     "format": "npm run format-src && npm run format-markdown",
     "format-src": "prettier-eslint --write \"src/**/*.js\"",
@@ -15,7 +15,7 @@
     "prepublishOnly": "cross-env NODE_ENV=production npm run build",
     "publish-docs": "gh-pages -d docs",
     "test": "jest --coverage",
-    "test:watch": "jest --watch",
+    "test-watch": "jest --watch",
     "release": "standard-version -a"
   },
   "repository": {
@@ -45,6 +45,7 @@
     "nyc": "^11.3.0",
     "prettier": "^1.9.1",
     "prettier-eslint-cli": "^4.6.1",
-    "standard-version": "^4.2.0"
+    "standard-version": "^4.2.0",
+    "watch": "^1.0.2"
   }
 }
