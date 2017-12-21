@@ -25,6 +25,16 @@
               
                 
                 <li><a
+                  href='#gatsby-pagination'
+                  class="">
+                  gatsby-pagination
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
                   href='#createpaginationpages'
                   class="">
                   createPaginationPages
@@ -35,9 +45,9 @@
               
                 
                 <li><a
-                  href='#pathcontext'
+                  href='#prefixpathformatter'
                   class="">
-                  pathContext
+                  prefixPathFormatter
                   
                 </a>
                 
@@ -45,9 +55,59 @@
               
                 
                 <li><a
-                  href='#prefixpathformatter'
+                  href='#paginationpagepathcontext'
                   class="">
-                  prefixPathFormatter
+                  PaginationPage~pathContext
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#pathformatter'
+                  class="">
+                  pathFormatter
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#edgeparser'
+                  class="">
+                  edgeParser
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#createlinkedpages'
+                  class="">
+                  createLinkedPages
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#linkedpagepathcontext'
+                  class="">
+                  LinkedPage~pathContext
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#edgeparserstruct'
+                  class="">
+                  EdgeParserStruct
                   
                 </a>
                 
@@ -68,6 +128,53 @@
   
   <div class='clearfix'>
     
+    <h3 class='fl m0' id='gatsby-pagination'>
+      gatsby-pagination
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>A collection of pagination tools for <a href="https://www.gatsbyjs.org">Gatsby</a>.</p>
+
+
+  <div class='pre p1 fill-light mt0'>gatsby-pagination</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
     <h3 class='fl m0' id='createpaginationpages'>
       createPaginationPages
     </h3>
@@ -76,7 +183,7 @@
   </div>
   
 
-  <p>Creates Gatsby pages with pagination by calling Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a> API. Each page is provided additional pagination properties in the <a href="#pathcontext">pathContext</a> parameter.</p>
+  <p>Factory method used to create Gatsby's pages, each provided with a subset of nodes and pagination properties, including the paths of the previous (<code>prev</code>) and <code>next</code> posts if they exist.  The API divides the provided data nodes into groups which it provides to the Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a> API, along with additional pagination properties. This pagination data is accessible within each 'components' via the <a href="#paginationpagepathcontext">pathContext</a> parameter.</p>
 
 
   <div class='pre p1 fill-light mt0'>createPaginationPages(props: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
@@ -117,9 +224,9 @@
                 <tr>
   <td class='break-word'><span class='code bold'>props.createPage</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
   </td>
-  <td class='break-word'><span>reference to Gatsby's createPage method, library will pass pagination properties to 
-<a href="context">context</a>
- object.
+  <td class='break-word'><span>reference to Gatsby's 
+<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a>
+ method
 </span></td>
 </tr>
 
@@ -137,7 +244,7 @@
                 <tr>
   <td class='break-word'><span class='code bold'>props.component</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>the resolved path of the component for each page
+  <td class='break-word'><span>The absolute path to the component used for each page
 </span></td>
 </tr>
 
@@ -155,11 +262,11 @@
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>props.pathFormatter</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  <td class='break-word'><span class='code bold'>props.pathFormatter</span> <code class='quiet'><a href="#pathformatter">pathFormatter</a></code>
   
     (default <code>DEFAULT_PATH_FORMATTER</code>)
   </td>
-  <td class='break-word'><span>the pathFormatter to be used to construct page paths
+  <td class='break-word'><span>the formatter to use when generating page paths
 </span></td>
 </tr>
 
@@ -202,14 +309,19 @@
   
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
-      
-      <pre class='p1 overflow-auto round fill-light'>createPaginationPages({
+      <p><p>each page created will have pagination properties, see <a href="#paginationpagepathcontext">pathContext</a></p>
+</p>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// usage inside gatsby-node.js</span>
+<span class="hljs-keyword">import</span> {createPaginationPages} <span class="hljs-keyword">from</span> <span class="hljs-string">"gatsby-pagination"</span>;
+
+<span class="hljs-comment">// ...</span>
+createPaginationPages({
   <span class="hljs-attr">createPage</span>: createPage,
   <span class="hljs-attr">edges</span>: result.data.allMarkdownRemark.edges,
   <span class="hljs-attr">component</span>: path.resolve(<span class="hljs-string">`./src/templates/my-sweet-new-page.js`</span>),
   <span class="hljs-comment">// define number of posts per page with limit, which defaults to 10.</span>
   limit: <span class="hljs-number">5</span>
- });</pre>
+});</pre>
     
   
 
@@ -228,18 +340,102 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='pathcontext'>
-      pathContext
+    <h3 class='fl m0' id='prefixpathformatter'>
+      prefixPathFormatter
     </h3>
     
     
   </div>
   
 
-  <p>Sample pathContext received in component.</p>
+  <p>An optional path formatter to utilize with createPaginationPages, enabling users to generate page paths prepend by a prefix.</p>
 
 
-  <div class='pre p1 fill-light mt0'>pathContext</div>
+  <div class='pre p1 fill-light mt0'>prefixPathFormatter</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>prefix</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    prefix to prepend path
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>function (pageNumber): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        path formatter intended for createPaginationPages
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// usage inside gatsby-node.js</span>
+<span class="hljs-keyword">import</span> {createPaginationPages, prefixPathFormatter} <span class="hljs-keyword">from</span> <span class="hljs-string">"gatsby-pagination"</span>;
+
+<span class="hljs-comment">//...</span>
+createPaginationPages({
+  <span class="hljs-attr">createPage</span>: createPage,
+  <span class="hljs-attr">edges</span>: result.data.allMarkdownRemark.edges,
+  <span class="hljs-attr">component</span>: path.resolve(<span class="hljs-string">`./src/templates/my-sweet-new-page.js`</span>),
+  <span class="hljs-comment">// path results: /blog, /blog/2, /blog/3, ...etc</span>
+  pathFormatter: prefixPathFormatter(<span class="hljs-string">"/blog"</span>)
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='paginationpagepathcontext'>
+      PaginationPage~pathContext
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>PaginationPage~pathContext</div>
   
     <p>
       Type:
@@ -321,10 +517,12 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// usage of properties provided by createPaginationPages inside the component.</span>
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
 
 <span class="hljs-keyword">const</span> IndexPage = <span class="hljs-function">(<span class="hljs-params">{ data, pathContext }</span>) =&gt;</span> {
   <span class="hljs-keyword">const</span> { nodes, page, prev, next, pages, total, limit } = pathContext;
+
   <span class="hljs-comment">//...</span>
 });</pre>
     
@@ -345,18 +543,23 @@
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='prefixpathformatter'>
-      prefixPathFormatter
+    <h3 class='fl m0' id='pathformatter'>
+      pathFormatter
     </h3>
     
     
   </div>
   
 
-  <p>Optional path formatter generates a relative path prepended by a prefix.</p>
+  <p>This callback is provided the current edge and must generate the <code>path</code> and optionally <code>context</code> object for each page.</p>
 
 
-  <div class='pre p1 fill-light mt0'>prefixPathFormatter</div>
+  <div class='pre p1 fill-light mt0'>pathFormatter(path: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>
+    </p>
   
   
 
@@ -373,8 +576,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>prefix</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    prefix to prepend path
+            <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    The original path to format.
 
           </div>
           
@@ -388,8 +591,8 @@
   
     
       <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code>function (pageNumber): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
-        path formatter intended for createPaginationPages
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>:
+        The formatted path.
 
       
     
@@ -401,14 +604,437 @@
     <div class='py1 quiet mt1 prose-big'>Example</div>
     
       
-      <pre class='p1 overflow-auto round fill-light'>createPaginationPages({
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// ...</span>
+createPaginationPages({
   <span class="hljs-attr">createPage</span>: createPage,
   <span class="hljs-attr">edges</span>: result.data.allMarkdownRemark.edges,
   <span class="hljs-attr">component</span>: path.resolve(<span class="hljs-string">`./src/templates/my-sweet-new-page.js`</span>),
-  <span class="hljs-comment">// path results: /blog, /blog/2, /blog/3, ...etc</span>
-  pathFormatter: prefixPathFormatter(<span class="hljs-string">"/blog"</span>)
+  <span class="hljs-comment">// example pathFormatter</span>
+  pathFormatter: <span class="hljs-function"><span class="hljs-params">path</span> =&gt;</span> <span class="hljs-string">`/blog/<span class="hljs-subst">${path}</span>`</span>;
 });</pre>
     
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='edgeparser'>
+      edgeParser
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Parses a given 'edge' and extracts the <code>path</code> and optionally <code>context</code> data to be passed to Gatsby's createPage API.</p>
+
+
+  <div class='pre p1 fill-light mt0'>edgeParser(edge: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>): <a href="#edgeparserstruct">EdgeParserStruct</a></div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>edge</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    data node to parse
+
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="#edgeparserstruct">EdgeParserStruct</a></code>:
+        payload intended for createPage API.
+
+      
+    
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">//...</span>
+createLinkedPages({
+  <span class="hljs-attr">createPage</span>: createPage,
+  <span class="hljs-attr">edges</span>: result.data.allMarkdownRemark.edges,
+  <span class="hljs-attr">component</span>: path.resolve(<span class="hljs-string">`./src/templates/my-sweet-pages.js`</span>),
+  <span class="hljs-comment">// example edgeParser</span>
+  edgeParser: <span class="hljs-function"><span class="hljs-params">edge</span> =&gt;</span> ({
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${edge.node.fields.slug}</span>`</span>,
+    <span class="hljs-attr">context</span>: {
+      <span class="hljs-attr">slug</span>: edge.node.fields.slug
+    }
+  });
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='createlinkedpages'>
+      createLinkedPages
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Factory method used to create Gatsby's pages, each provided with a single of data nodes and pagination properties, including the paths to the previous (<code>prev</code>) and <code>next</code> post if they exist.  The API provides each node to Gatsby's <a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a> API, along with additional pagination properties, perfect for posts that would like to link to the previous or next post. This pagination data is accessible within each 'components' via it's <a href="#linkedpagepathcontext">pathContext</a> parameter.</p>
+
+
+  <div class='pre p1 fill-light mt0'>createLinkedPages(props: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>props</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    properties
+
+          </div>
+          
+          <table class='mt1 mb2 fixed-table h5 col-12'>
+            <colgroup>
+              <col width='30%' />
+              <col width='70%' />
+            </colgroup>
+            <thead>
+              <tr class='bold fill-light'>
+                <th>Name</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody class='mt1'>
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.createPage</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a></code>
+  </td>
+  <td class='break-word'><span>reference to Gatsby's 
+<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">createPage</a>
+ method
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.edges</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>></code>
+  </td>
+  <td class='break-word'><span>collection of data nodes
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.component</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>The absolute path to the component used for each page
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.edgeParser</span> <code class='quiet'><a href="#edgeparser">edgeParser</a>?</code>
+  </td>
+  <td class='break-word'><span>the edgeParser that handles providing properties handed to createPage per Edge
+</span></td>
+</tr>
+
+
+              
+                <tr>
+  <td class='break-word'><span class='code bold'>props.circular</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>if the pagination should link the first and last post, looping the content.
+</span></td>
+</tr>
+
+
+              
+            </tbody>
+          </table>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Throws</div>
+    <ul>
+      
+        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Argument 
+<code>createPage</code>
+ must be provided.
+</li>
+      
+        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Argument 
+<code>edges</code>
+ must be provided.
+</li>
+      
+        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Argument 
+<code>component</code>
+ must be provided.
+</li>
+      
+        <li><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Error">Error</a>: Argument 
+<code>edgeParser</code>
+ must be provided.
+</li>
+      
+    </ul>
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      <p><p>each page created will have pagination properties, see <a href="#linkedpagepathcontext">pathContext</a></p>
+</p>
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// usage inside gatsby-node.js</span>
+<span class="hljs-keyword">import</span> {createLinkedPages} <span class="hljs-keyword">from</span> <span class="hljs-string">"gatsby-pagination"</span>;
+
+<span class="hljs-comment">//...</span>
+createLinkedPages({
+  <span class="hljs-attr">createPage</span>: createPage,
+  <span class="hljs-attr">edges</span>: result.data.allMarkdownRemark.edges,
+  <span class="hljs-attr">component</span>: path.resolve(<span class="hljs-string">`./src/templates/my-sweet-pages.js`</span>),
+  <span class="hljs-attr">edgeParser</span>: <span class="hljs-function"><span class="hljs-params">edge</span> =&gt;</span> ({
+    <span class="hljs-attr">path</span>: <span class="hljs-string">`/<span class="hljs-subst">${edge.node.fields.slug}</span>`</span>,
+    <span class="hljs-attr">context</span>: {
+      <span class="hljs-attr">slug</span>: edge.node.fields.slug
+    }
+  });
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='linkedpagepathcontext'>
+      LinkedPage~pathContext
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>LinkedPage~pathContext</div>
+  
+    <p>
+      Type:
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+    </p>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>total</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+          : the total number of nodes/pages
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>prev</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>))</code>
+          : the path of previous page if it exists
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>next</span> <code class='quiet'>((<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a>))</code>
+          : the path of next page if it exists
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
+      
+      <pre class='p1 overflow-auto round fill-light'><span class="hljs-comment">// usage of properties provided by createLinkedPages inside the component.</span>
+<span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">"react"</span>;
+
+<span class="hljs-keyword">const</span> IndexPage = <span class="hljs-function">(<span class="hljs-params">{ data, pathContext }</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> { prev, next, total } = pathContext;
+
+  <span class="hljs-comment">//...</span>
+});</pre>
+    
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='edgeparserstruct'>
+      EdgeParserStruct
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new EdgeParserStruct()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Properties</div>
+    <div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+          : the path data to pass to pageCreate.
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>context</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
+          : the context data to pass to pageCreate, See 
+[
+Gatsby documentation
+]
+@link{
+<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage%7D">https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}</a>
+
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
   
 
   

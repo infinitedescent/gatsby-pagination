@@ -10,6 +10,7 @@ script:
 jobs:
   include:
   - stage: Publish npm
+    if: type IN (push) AND branch = master
     node_js: node
     script:
     - echo "Release npm against $(node -v) ..."
