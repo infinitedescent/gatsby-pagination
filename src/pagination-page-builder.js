@@ -56,9 +56,11 @@ class PaginationPageBuilder {
     this.component = component;
     this.limit = constants.DEFAULT_LIMIT;
     this.pathFormatter = constants.DEFAULT_PATH_FORMATTER;
+    this.context = {};
 
     this.setLimit = this.setLimit.bind(this);
     this.setPathFormatter = this.setPathFormatter.bind(this);
+    this.setContext = this.setContext.bind(this);
     this.build = this.build.bind(this);
   }
 
@@ -85,19 +87,28 @@ class PaginationPageBuilder {
   }
 
   /**
+   * Set a context object
+   * @param {Object} context - the context data to pass to pageCreate, See [Gatsby documentation]@link{https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
+   * @returns {Object} - object instance to be chainable
+   */
+  setContext(context) {
+    this.context = context;
+    return this;
+  }
+
+  /**
    * start build process to create pages with pagination.
    */
   build() {
     createEdgeSubsets(this.edges, this.limit).forEach(
       (subset, index, subsets) => {
         let pageNumber = index + 1;
-        let context = {
-          nodes: subset,
-          page: pageNumber,
-          pages: subsets.length,
-          total: this.edges.length,
-          limit: this.limit
-        };
+        let context = JSON.parse(JSON.stringify(this.context));
+        context.nodes = subset;
+        context.page = pageNumber;
+        context.pages = subsets.length;
+        context.total = this.edges.length;
+        context.limit = this.limit;
 
         if (hasPrevPage(index)) {
           context.prev = this.pathFormatter(pageNumber - 1);
