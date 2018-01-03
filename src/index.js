@@ -17,6 +17,7 @@ import { DEFAULT_PATH_FORMATTER } from "./constants";
  * @param {string} props.component - The absolute path to the component used for each page
  * @param {number} [props.limit=10] - the posts per page limit
  * @param {pathFormatter} [props.pathFormatter=DEFAULT_PATH_FORMATTER] - the formatter to use when generating page paths
+ * @param {Object} [props.context] - the context data to pass to pageCreate, See [Gatsby documentation]@link{https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
  *
  * @throws {Error} Argument `createPage` must be provided.
  * @throws {Error} Argument `edges` must be provided.
@@ -41,7 +42,7 @@ import { DEFAULT_PATH_FORMATTER } from "./constants";
  * });
  */
 export function createPaginationPages(props) {
-  const { createPage, edges, component, limit, pathFormatter } = props;
+  const { createPage, edges, component, limit, pathFormatter, context } = props;
   const paginationPageBuilder = new PaginationPageBuilder(
     createPage,
     edges,
@@ -49,6 +50,7 @@ export function createPaginationPages(props) {
   );
   if (limit) paginationPageBuilder.setLimit(limit);
   if (pathFormatter) paginationPageBuilder.setPathFormatter(pathFormatter);
+  if (context) paginationPageBuilder.setContext(context);
   paginationPageBuilder.build();
 }
 /**

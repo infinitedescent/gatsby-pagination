@@ -120,6 +120,28 @@ describe(`gatsby-pagination`, () => {
 
       expect(createPage.mock.calls[0][0].component).toBe(expected);
     });
+
+    test("should allow custom context to be used", () => {
+      const edges = buildEdgeSet(7);
+      const createPage = buildMock();
+
+      createPaginationPages({
+        edges: edges,
+        createPage: createPage,
+        component: "component",
+        limit: 2,
+        context: { foo: "bar" }
+      });
+
+      expect(createPage.mock.calls[0][0].context.foo).toBeDefined();
+      expect(createPage.mock.calls[0][0].context.foo).toBe("bar");
+      expect(createPage.mock.calls[1][0].context.foo).toBeDefined();
+      expect(createPage.mock.calls[1][0].context.foo).toBe("bar");
+      expect(createPage.mock.calls[2][0].context.foo).toBeDefined();
+      expect(createPage.mock.calls[2][0].context.foo).toBe("bar");
+      expect(createPage.mock.calls[3][0].context.foo).toBeDefined();
+      expect(createPage.mock.calls[3][0].context.foo).toBe("bar");
+    });
   });
 
   describe(`prefixPathFormatter`, () => {
