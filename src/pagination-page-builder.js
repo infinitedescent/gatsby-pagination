@@ -46,7 +46,7 @@ const hasNextPage = (index, pages) => index + 1 < pages.length;
  * [Gatsby's createPage documentation]{@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
  */
 class PaginationPageBuilder {
-  constructor(createPage, edges, component) {
+  constructor(createPage, edges, component, layout) {
     if (!createPage) throw Error("Argument `createPage` must be provided.");
     if (!edges) throw Error("Argument `edges` must be provided.");
     if (!component) throw Error("Argument `component` must be provided.");
@@ -54,6 +54,7 @@ class PaginationPageBuilder {
     this.createPage = createPage;
     this.edges = edges;
     this.component = component;
+    this.layout = layout;
     this.limit = constants.DEFAULT_LIMIT;
     this.pathFormatter = constants.DEFAULT_PATH_FORMATTER;
     this.context = {};
@@ -121,6 +122,7 @@ class PaginationPageBuilder {
         return this.createPage({
           path: this.pathFormatter(pageNumber),
           component: this.component,
+          layout: this.layout,
           context: context
         });
       }
