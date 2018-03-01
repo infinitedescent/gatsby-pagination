@@ -30,7 +30,7 @@ Recommended reference: [Creating pages in gatsby-node.js](https://www.gatsbyjs.o
 
 ### Require the package
 
-In `gatsby-node.js` require or import the _createPaginationPages_ factory method from _gatsby-paginate_.
+In `gatsby-node.js` require or import the _createPaginationPages_ factory method from _gatsby-pagination_.
 
 ```js
 const { createPaginationPages } = require("gatsby-pagination");
