@@ -18,7 +18,7 @@ import { DEFAULT_PATH_FORMATTER } from "./constants";
  * @param {string} [props.layout] The name of the layout for this page. By default `'index'` layout is used
  * @param {number} [props.limit=10] - the posts per page limit
  * @param {pathFormatter} [props.pathFormatter=DEFAULT_PATH_FORMATTER] - the formatter to use when generating page paths
- * @param {Object} [props.context] - the context data to pass to pageCreate, See [Gatsby documentation]@link{https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
+ * @param {Object} [props.context] - the context data to pass to pageCreate, See {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|Gatsby documentation}
  *
  * @throws {Error} Argument `createPage` must be provided.
  * @throws {Error} Argument `edges` must be provided.
@@ -133,8 +133,8 @@ export const prefixPathFormatter = prefix => pageNumber =>
  * @param {function} props.createPage - reference to Gatsby's {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|createPage} method
  * @param {Array.<Object>} props.edges - collection of data nodes
  * @param {string} props.component - The absolute path to the component used for each page
- * @param {edgeParser} [props.edgeParser] - the edgeParser that handles providing properties handed to createPage per Edge
- * @param {boolean} props.circular - if the pagination should link the first and last post, looping the content.
+ * @param {edgeParser} props.edgeParser - the edgeParser that handles providing properties handed to createPage per Edge
+ * @param {boolean} [props.circular] - if the pagination should link the first and last post, looping the content.
  *
  * @throws {Error} Argument `createPage` must be provided.
  * @throws {Error} Argument `edges` must be provided.
@@ -204,8 +204,9 @@ export function createLinkedPages(props) {
 /**
  *  @class EdgeParserStruct
  *  @type {Object}
- *  @property {string} path - the path data to pass to pageCreate.
- *  @property {Object} [context] - the context data to pass to pageCreate, See [Gatsby documentation]@link{https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}
+ *  @property {string} path - the path data to pass to pageCreate
+ *  @property {Object} [context] - the context data to pass to pageCreate, See {@link https://www.gatsbyjs.org/docs/bound-action-creators/#createPage|Gatsby documentation}
+ *  @property {string} [layout] - The name of the layout for this page. By default `'index'` layout is used
  */
 
 /**

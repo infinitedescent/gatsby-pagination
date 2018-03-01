@@ -19,8 +19,9 @@ describe(`PaginationPageBuilder`, () => {
     const createPage = () => "";
     const edges = [];
     const component = "component";
+    const layout = "layout";
     expect(
-      new PaginationPageBuilder(createPage, edges, component)
+      new PaginationPageBuilder(createPage, edges, component, layout)
     ).toBeDefined();
   });
 
@@ -187,6 +188,22 @@ describe(`PaginationPageBuilder`, () => {
       instance.build();
 
       expect(createPage.mock.calls[0][0].component).toBe(expected);
+    });
+
+    test("should call createPage with expected layout", () => {
+      const createPage = buildMock();
+      const edges = buildEdgeSet(10);
+      const instance = new PaginationPageBuilder(
+        createPage,
+        edges,
+        "component",
+        "layout"
+      );
+      const expected = "layout";
+
+      instance.build();
+
+      expect(createPage.mock.calls[0][0].layout).toBe(expected);
     });
 
     test("should call createPage with expected path", () => {

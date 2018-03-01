@@ -221,6 +221,30 @@ describe(`LinkedPageBuilder`, () => {
       expect(createPage.mock.calls[2][0].context.data).toBe("myData");
     });
 
+    test("should call createPage without layout only when included in edgeParser output", () => {
+      const createPage = buildMock();
+      const edges = ["a", "b", "c"];
+      const component = "component";
+      const paramsFormatter = jest.fn().mockImplementation(edge => ({
+        path: `/${edge}`,
+        context: {
+          data: "myData"
+        },
+        layout: edge === "b" ? undefined : `layout.${edge}`
+      }));
+
+      new LinkedPageBuilder(
+        createPage,
+        edges,
+        component,
+        paramsFormatter
+      ).build();
+
+      expect(createPage.mock.calls[0][0].layout).toBe("layout.a");
+      expect(createPage.mock.calls[1][0].layout).not.toBeDefined();
+      expect(createPage.mock.calls[2][0].layout).toBe("layout.c");
+    });
+
     test("should call createPage with expected `next` results when 'circular' is disabled", () => {
       const createPage = buildMock();
       const edges = ["a", "b", "c"];
