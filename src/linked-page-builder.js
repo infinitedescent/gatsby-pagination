@@ -67,6 +67,9 @@ class LinkedPageBuilder {
         component: this.component,
         context: Object.assign(param.context ? param.context : {}, data)
       };
+      if (param.layout) {
+        payload.layout = param.layout;
+      }
       this.createPage(payload);
     });
   }

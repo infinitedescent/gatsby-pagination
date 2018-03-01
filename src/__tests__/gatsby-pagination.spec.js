@@ -36,18 +36,40 @@ describe(`gatsby-pagination`, () => {
     });
 
     test("should allow a custom number of posts per page.", () => {
-      const edges = buildEdgeSet(30);
+      let i = 1;
+      const edges = buildEdgeSet(8).map(obj => ({ post: i++ }));
       const createPage = buildMock();
-      const expected = 15;
 
       createPaginationPages({
         edges: edges,
         createPage: createPage,
         component: "component",
-        limit: 2
+        limit: 5
       });
 
-      expect(createPage.mock.calls.length).toBe(expected); // inferred by calls to createPage
+      expect(createPage.mock.calls.length).toBe(2); // inferred by calls to createPage
+      expect(createPage.mock.calls[0][0].context).toMatchObject({
+        limit: 5,
+        next: "/2",
+        nodes: [
+          { post: 1 },
+          { post: 2 },
+          { post: 3 },
+          { post: 4 },
+          { post: 5 }
+        ],
+        page: 1,
+        pages: 2,
+        total: 8
+      });
+      expect(createPage.mock.calls[1][0].context).toMatchObject({
+        limit: 5,
+        nodes: [{ post: 6 }, { post: 7 }, { post: 8 }],
+        page: 2,
+        pages: 2,
+        prev: "/",
+        total: 8
+      });
     });
 
     test("should format first pages as blank index page, not with a number", () => {
@@ -177,7 +199,7 @@ describe(`gatsby-pagination`, () => {
     });
   });
 
-  const runCreateLinkedPages = (edges, circular = false) => {
+  const runCreateLinkedPages = edges => {
     const createPage = buildMock();
     const edgeParser = edge => ({
       path: `/${edge.node.fields.slug}`,
@@ -190,8 +212,7 @@ describe(`gatsby-pagination`, () => {
       edges: edges,
       createPage: createPage,
       component: "MyComponent",
-      edgeParser: edgeParser,
-      circular: circular
+      edgeParser: edgeParser
     });
 
     return createPage;
@@ -224,13 +245,33 @@ describe(`gatsby-pagination`, () => {
       expect(createPage.mock.calls[2][0].context.next).not.toBeDefined();
     });
 
+    const runCreateLinkedPagesAndEnableCircular = edges => {
+      const createPage = buildMock();
+      const edgeParser = edge => ({
+        path: `/${edge.node.fields.slug}`,
+        context: {
+          slug: edge.node.fields.slug
+        }
+      });
+
+      createLinkedPages({
+        edges: edges,
+        createPage: createPage,
+        component: "MyComponent",
+        edgeParser: edgeParser,
+        circular: true
+      });
+
+      return createPage;
+    };
+
     test("should support circular option to link the first and last nodes.", () => {
       const edges = buildEdgeSet(3, { node: { fields: { slug: "" } } });
       edges[0].node.fields.slug = "a";
       edges[1].node.fields.slug = "b";
       edges[2].node.fields.slug = "c";
 
-      const createPage = runCreateLinkedPages(edges, true);
+      const createPage = runCreateLinkedPagesAndEnableCircular(edges);
 
       expect(createPage.mock.calls[0][0].context.prev).toBe("/c");
       expect(createPage.mock.calls[2][0].context.next).toBe("/a");
@@ -285,6 +326,42 @@ describe(`gatsby-pagination`, () => {
       expect(createPage.mock.calls[0][0].context.slug).toBe("a");
       expect(createPage.mock.calls[1][0].context.slug).toBe("b");
       expect(createPage.mock.calls[2][0].context.slug).toBe("c");
+    });
+
+    const runCreateLinkedPagesAndSetLayout = edges => {
+      const createPage = buildMock();
+      const edgeParser = edge => ({
+        path: `/${edge.node.fields.slug}`,
+        context: {
+          slug: edge.node.fields.slug
+        },
+        layout:
+          edge.node.fields.slug === "b"
+            ? undefined
+            : `layout.${edge.node.fields.slug}`
+      });
+
+      createLinkedPages({
+        edges: edges,
+        createPage: createPage,
+        component: "MyComponent",
+        edgeParser: edgeParser
+      });
+
+      return createPage;
+    };
+
+    test("should allow the ability to set each page's layout", () => {
+      const edges = buildEdgeSet(3, { node: { fields: { slug: "" } } });
+      edges[0].node.fields.slug = "a";
+      edges[1].node.fields.slug = "b";
+      edges[2].node.fields.slug = "c";
+
+      const createPage = runCreateLinkedPagesAndSetLayout(edges);
+
+      expect(createPage.mock.calls[0][0].layout).toBe("layout.a");
+      expect(createPage.mock.calls[1][0].layout).not.toBeDefined();
+      expect(createPage.mock.calls[2][0].layout).toBe("layout.c");
     });
   });
 });

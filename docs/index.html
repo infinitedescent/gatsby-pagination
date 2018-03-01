@@ -251,6 +251,17 @@
 
               
                 <tr>
+  <td class='break-word'><span class='code bold'>props.layout</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?</code>
+  </td>
+  <td class='break-word'><span>The name of the layout for this page. By default 
+<code>'index'</code>
+ layout is used
+</span></td>
+</tr>
+
+
+              
+                <tr>
   <td class='break-word'><span class='code bold'>props.limit</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></code>
   
     (default <code>10</code>)
@@ -276,11 +287,7 @@
   <td class='break-word'><span class='code bold'>props.context</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?</code>
   </td>
   <td class='break-word'><span>the context data to pass to pageCreate, See 
-[
-Gatsby documentation
-]
-@link{
-<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage%7D">https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}</a>
+<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">Gatsby documentation</a>
 </span></td>
 </tr>
 
@@ -720,7 +727,7 @@ createPaginationPages({
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>props.edgeParser</span> <code class='quiet'><a href="#edgeparser">edgeParser</a>?</code>
+  <td class='break-word'><span class='code bold'>props.edgeParser</span> <code class='quiet'><a href="#edgeparser">edgeParser</a></code>
   </td>
   <td class='break-word'><span>the edgeParser that handles providing properties handed to createPage per Edge
 </span></td>
@@ -729,7 +736,7 @@ createPaginationPages({
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>props.circular</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  <td class='break-word'><span class='code bold'>props.circular</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>?</code>
   </td>
   <td class='break-word'><span>if the pagination should link the first and last post, looping the content.
 </span></td>
@@ -935,7 +942,7 @@ createLinkedPages({
       
         <div class='space-bottom0'>
           <span class='code bold'>path</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-          : the path data to pass to pageCreate.
+          : the path data to pass to pageCreate
 
           
         </div>
@@ -943,11 +950,16 @@ createLinkedPages({
         <div class='space-bottom0'>
           <span class='code bold'>context</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>?)</code>
           : the context data to pass to pageCreate, See 
-[
-Gatsby documentation
-]
-@link{
-<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage%7D">https://www.gatsbyjs.org/docs/bound-action-creators/#createPage}</a>
+<a href="https://www.gatsbyjs.org/docs/bound-action-creators/#createPage">Gatsby documentation</a>
+
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <span class='code bold'>layout</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>?)</code>
+          : The name of the layout for this page. By default 
+<code>'index'</code>
+ layout is used
 
           
         </div>
