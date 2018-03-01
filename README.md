@@ -130,6 +130,27 @@ export default IndexPage;
 export const query = graphql`add GraphQL query`;
 ```
 
+## Examples
+
+The best 'example' is to look at [gatsby-starter-casper](https://github.com/haysclark/gatsby-starter-casper). The starter uses gatsby-pagination a couple of times and also includes GraphQL queries.
+
+[createPaginationPages example](https://github.com/haysclark/gatsby-starter-casper/blob/master/gatsby-node.js#L83-L89)
+
+* basic example of `createPaginationPages`
+* show the use of `limit`
+
+[advanced createPaginationPages example](https://github.com/haysclark/gatsby-starter-casper/blob/master/gatsby-node.js#L131-L146)
+
+* advanced example of `createPaginationPages`
+* shows the use of `pathFormatter`
+* shows the use of `context`
+
+[createLinkedPages and edgeParser example](https://github.com/haysclark/gatsby-starter-casper/blob/master/gatsby-node.js#L91-L103)
+
+* most basic example of `createPaginationPages`
+* shows the use of `edgeParser`, enabling developers to customized `context` payload for each `createPage` call.
+* show use of `circular` param
+
 ## License
 
 MIT
