@@ -45,17 +45,14 @@ paths.
 
 See the [createPaginatePages](https://infinitedescent.github.io/gatsby-pagination/#createpaginationpages) documentation for more details.
 
-```js
-exports.createPages = ({ graphql, boundActionCreators }) => {
+```jsexports.createPages = ({ graphql, boundActionCreators }) => {
   const { createPage } = boundActionCreators;
 
   return new Promise((resolve, reject) => {
     const indexPage = path.resolve("src/components/index.jsx");
     const postPage = path.resolve("src/components/post.jsx");
     resolve(
-      graphql(
-        `add GraphQL query`
-      ).then(result => {
+      graphql(`add GraphQL query`).then(result => {
         if (result.errors) {
           reject(result.errors);
         }
@@ -67,18 +64,17 @@ exports.createPages = ({ graphql, boundActionCreators }) => {
           limit: 5
         });
 
-          createPage({
-            path: edge.node.id,
-            component: postPage,
-            context: {
-              slug: edge.node.fields.slug
-            }
-          });
+        createPage({
+          path: edge.node.id,
+          component: postPage,
+          context: {
+            slug: edge.node.fields.slug
+          }
         });
       })
     );
   });
-};
+};  
 ```
 
 ### Create the index.js component
