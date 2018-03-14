@@ -23,6 +23,7 @@
   },
   "keywords": [
     "gatsby",
+    "gatsby-plugin",
     "pagination"
   ],
   "bugs": {
